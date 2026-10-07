@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Pembelajaran IPA Kelas VIII - Sistem Pernapasan Manusia</title>
+  <style>
+    :root {
+      --primary: #1e88e5;
+      --primary-dark: #1565c0;
+      --secondary: #4caf50;
+      --accent: #ff9800;
+      --bg-light: #f4f9fc;
+      --text-dark: #2c3e50;
+      --white: #ffffff;
+      --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      --border-radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: var(--bg-light); color: var(--text-dark); line-height: 1.6; }
+
+    /* Header & Navigasi */
+    header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: var(--white); padding: 1.5rem 1rem; text-align: center; }
+    header h1 { font-size: 1.8rem; margin-bottom: 0.3rem; }
+    header p { font-size: 1.1rem; opacity: 0.9; }
+
+    nav { background: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.1); sticky: top 0; z-index: 100; position: sticky; top: 0; overflow-x: auto; white-space: nowrap; display: flex; justify-content: center; padding: 0.5rem; }
+    nav button { background: none; border: none; padding: 0.6rem 1.2rem; font-weight: 600; color: var(--text-dark); cursor: pointer; transition: 0.3s; margin: 0 0.2rem; border-radius: 20px; font-size: 0.95rem; }
+    nav button:hover, nav button.active { background-color: var(--primary); color: var(--white); }
+
+    /* Container Utama */
+    .container { max-width: 1000px; margin: 1.5rem auto; padding: 0 1rem; }
+    .section { display: none; background: var(--white); padding: 1.5rem; border-radius: var(--border-radius); box-shadow: var(--card-shadow); margin-bottom: 2rem; }
+    .section.active { display: block; }
+
+    h2 { color: var(--primary-dark); border-bottom: 3px solid var(--secondary); padding-bottom: 0.5rem; margin-bottom: 1.2rem; font-size: 1.4rem; }
+    
+    /* Buttons */
+    .btn { background-color: var(--primary); color: var(--white); border: none; padding: 0.8rem 1.5rem; font-size: 1rem; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; margin-top: 1rem; text-decoration: none; text-align: center; }
+    .btn:hover { background-color: var(--primary-dark); transform: translateY(-2px); }
+    .btn-secondary { background-color: var(--secondary); }
+    .btn-secondary:hover { background-color: #388e3c; }
+
+    /* Forms & Inputs */
+    input[type="text"], textarea, select { width: 100%; padding: 0.8rem; margin: 0.5rem 0 1rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+
+    /* Section A: Beranda */
+    .hero { text-align: center; padding: 2rem 1rem; background: linear-gradient(180deg, #e3f2fd, var(--white)); border-radius: var(--border-radius); }
+    .hero h3 { font-size: 1.5rem; color: var(--primary-dark); margin-bottom: 0.5rem; }
+    .teacher-badge { display: inline-block; background: #e8f5e9; color: #2e7d32; padding: 0.4rem 1rem; border-radius: 20px; font-weight: bold; margin-bottom: 1rem; border: 1px solid #a5d6a7; }
+
+    /* Section C: Peta Konsep */
+    .concept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .concept-card { background: var(--bg-light); border: 2px solid var(--primary); padding: 1rem; text-align: center; border-radius: 8px; cursor: pointer; transition: 0.3s; font-weight: bold; }
+    .concept-card:hover { background: var(--primary); color: var(--white); }
+
+    /* Section D: Materi Organ */
+    .organ-card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; margin-bottom: 1rem; background: #fafafa; }
+    .organ-card h3 { color: var(--primary-dark); margin-bottom: 0.5rem; }
+    .badge-fact { background: #fff3e0; color: #e65100; padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.85rem; display: inline-block; margin-top: 0.5rem; font-weight: bold; }
+
+    /* Section E: Simulasi Pernapasan */
+    .sim-box { border: 2px dashed var(--primary); padding: 1.5rem; text-align: center; border-radius: 12px; background: #f0f7ff; }
+    .chest-visual { width: 160px; height: 160px; margin: 1rem auto; border: 4px solid var(--primary-dark); border-radius: 50% 50% 10% 10%; position: relative; transition: all 0.5s ease; background: #e1f5fe; }
+    .diaphragm-line { position: absolute; bottom: 10px; left: 10%; width: 80%; height: 12px; background: var(--accent); border-radius: 6px; transition: all 0.5s ease; }
+    .sim-stats { display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: 1rem; font-weight: bold; }
+
+    /* Modals / Popups */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
+    .modal-content { background: var(--white); padding: 1.5rem; border-radius: 12px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; }
+    .close-btn { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; cursor: pointer; }
+
+    /* Progress Bar */
+    .progress-container { width: 100%; background-color: #e0e0e0; border-radius: 10px; margin: 1rem 0; }
+    .progress-bar { width: 0%; height: 12px; background-color: var(--secondary); border-radius: 10px; transition: width 0.3s; }
+
+    /* Responsive Utilities */
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.4rem; }
+      nav button { padding: 0.5rem 0.8rem; font-size: 0.85rem; }
+      .sim-stats { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1 id="app-title">MEDIA PEMBELAJARAN INTERAKTIF</h1>
+  <p id="app-subtitle">Sistem Pernapasan Manusia - IPA Kelas VIII SMP</p>
+</header>
+
+<nav>
+  <button onclick="showSection('beranda')" class="active">Beranda</button>
+  <button onclick="showSection('tujuan')">Tujuan</button>
+  <button onclick="showSection('peta')">Peta Konsep</button>
+  <button onclick="showSection('materi')">Materi</button>
+  <button onclick="showSection('simulasi')">Simulasi</button>
+  <button onclick="showSection('kasus')">Studi Kasus</button>
+  <button onclick="showSection('kuis')">Kuis Evaluasi</button>
+  <button onclick="showSection('refleksi')">Refleksi</button>
+  <button onclick="showSection('rekap')">Rekap Nilai</button>
+</nav>
+
+<div class="container">
+
+  <!-- A. BERANDA -->
+  <section id="beranda" class="section active">
+    <div class="hero">
+      <div class="teacher-badge">Pengampu: <span id="nama-guru-display">Bapak/Ibu Guru IPA</span></div>
+      <h3>Selamat Datang di Media Pembelajaran Digital IPA</h3>
+      <p>Jelajahi keajaiban sistem pernapasan manusia melalui materi interaktif, simulasi mekanis, dan analisis studi kasus kehidupan sehari-hari.</p>
+      
+      <div style="margin: 1.5rem 0;">
+        <label for="nama-siswa" style="font-weight:bold;">Masukkan Nama Lengkap Anda:</label>
+        <input type="text" id="nama-siswa" placeholder="Ketik nama kamu di sini..." required>
+        <label for="kelas-siswa" style="font-weight:bold;">Kelas:</label>
+        <input type="text" id="kelas-siswa" placeholder="Contoh: VIII-A" value="VIII-A">
+      </div>
+
+      <button class="btn btn-secondary" onclick="mulaiBelajar()">Mulai Belajar Sekarang</button>
+      
+      <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+        <a id="doc-materi" class="btn" href="#" target="_blank">📄 Materi Lengkap (Doc)</a>
+        <a id="doc-lkpd" class="btn" href="#" target="_blank">📝 LKPD Digital</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- B. TUJUAN PEMBELAJARAN -->
+  <section id="tujuan" class="section">
+    <h2>Tujuan Pembelajaran & Capaian Pembelajaran</h2>
+    <div style="background:#e8f5e9; padding:1rem; border-left:5px solid var(--secondary); margin-bottom:1rem;">
+      <strong>Capaian Pembelajaran (CP):</strong>
+      <p><em>"Peserta didik mampu melakukan analisis untuk menemukan keterkaitan sistem organ dengan fungsinya serta kelainan atau gangguan yang muncul pada sistem organ tertentu, termasuk sistem pernapasan."</em></p>
+    </div>
+    <h3>Indikator Pembelajaran:</h3>
+    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+      <li>Mengidentifikasi organ-organ penyusun sistem pernapasan manusia.</li>
+      <li>Menjelaskan struktur dan fungsi masing-masing organ pernapasan.</li>
+      <li>Menjelaskan mekanisme inspirasi dan ekspirasi.</li>
+      <li>Menganalisis keterkaitan gangguan pernapasan dengan kebiasaan hidup sehari-hari.</li>
+    </ul>
+  </section>
+
+  <!-- C. PETA KONSEP -->
+  <section id="peta" class="section">
+    <h2>Peta Konsep Interaktif</h2>
+    <p>Klik salah satu cabang untuk melihat penjelasan singkat:</p>
+    <div class="concept-grid">
+      <div class="concept-card" onclick="openModal('Organ Pernapasan', 'Meliputi Hidung, Faring, Laring, Trakea, Bronkus, Bronkiolus, dan Alveolus.')">Organ Pernapasan</div>
+      <div class="concept-card" onclick="openModal('Struktur & Fungsi', 'Tiap organ memiliki penyesuaian struktur seperti silia, silindris bersilia, dan pembuluh darah halus untuk mengoptimalkan pertukaran gas.')">Struktur & Fungsi</div>
+      <div class="concept-card" onclick="openModal('Mekanisme Pernapasan', 'Terdiri atas Inspirasi (menghirup udara) dan Ekspirasi (menghembuskan udara) yang melibatkan otot dada dan diafragma.')">Mekanisme Pernapasan</div>
+      <div class="concept-card" onclick="openModal('Gangguan Pernapasan', 'Penyakit seperti Asma, TBC, Bronkitis, dan Influenza akibat infeksi atau polusi lingkungan.')">Gangguan Pernapasan</div>
+      <div class="concept-card" onclick="openModal('Menjaga Kesehatan', 'Menghindari asap rokok, menggunakan masker, berolahraga teratur, dan menjaga sirkulasi udara ruangan.')">Menjaga Kesehatan</div>
+    </div>
+  </section>
+
+  <!-- D. MATERI INTERAKTIF -->
+  <section id="materi" class="section">
+    <h2>Materi Organ Pernapasan</h2>
+
+    <div class="organ-card">
+      <h3>1. Hidung</h3>
+      <p><strong>Struktur:</strong> Memiliki rambut hidung, konka, dan selaput lendir.</p>
+      <p><strong>Fungsi:</strong> Menyaring debu, menyesuaikan suhu, dan mengatur kelembapan udara yang masuk.</p>
+      <p><strong>Hubungan Struktur-Fungsi:</strong> Lendir dan rambut hidung menangkap partikel asing agar tidak masuk ke paru-paru.</p>
+      <span class="badge-fact">💡 Fakta Unik: Hidung menghasilkan sekitar 1 liter lendir setiap hari untuk perlindungan!</span>
+    </div>
+
+    <div class="organ-card">
+      <h3>2. Trakea (Batang Tenggorokan)</h3>
+      <p><strong>Struktur:</strong> Cincin tulang rawan berbentuk 'C' dan jaringan epitel silindris bersilia.</p>
+      <p><strong>Fungsi:</strong> Saluran penyalur udara utama menuju bronkus.</p>
+      <p><strong>Hubungan Struktur-Fungsi:</strong> Silia bergetar untuk mendorong keluar benda asing atau kotoran yang lolos dari hidung.</p>
+    </div>
+
+    <div class="organ-card">
+      <h3>3. Alveolus</h3>
+      <p><strong>Struktur:</strong> Kantung udara kecil berdinding tipis yang dikelilingi kapiler darah.</p>
+      <p><strong>Fungsi:</strong> Tempat pertukaran Oksigen ($O_2$) dan Karbondioksida ($CO_2$) secara difusi.</p>
+      <p><strong>Hubungan Struktur-Fungsi:</strong> Dinding tipis dan jumlahnya yang miliaran memperluas permukaan difusi gas.</p>
+    </div>
+  </section>
+
+  <!-- E. SIMULASI MEKANISME PERNAPASAN -->
+  <section id="simulasi" class="section">
+    <h2>Simulasi Mekanisme Pernapasan</h2>
+    <div class="sim-box">
+      <div id="chest-box" class="chest-visual">
+        <div id="diaphragm" class="diaphragm-line"></div>
+      </div>
+
+      <div class="sim-stats">
+        <div>Kondisi Diafragma: <span id="stat-diaphragm" style="color:var(--primary-dark);">Rileks (Melengkung)</span></div>
+        <div>Volume Rongga Dada: <span id="stat-volume" style="color:var(--primary-dark);">Mengecil</span></div>
+        <div>Tekanan Udara: <span id="stat-pressure" style="color:var(--primary-dark);">Meningkat</span></div>
+        <div>Arah Udara: <span id="stat-air" style="color:var(--primary-dark);">Keluarnya Udara (Ekspirasi)</span></div>
+      </div>
+
+      <div style="margin-top:1.5rem;">
+        <button class="btn" onclick="setSimulasi('inspirasi')">INSPIRASI (Hirup Udara)</button>
+        <button class="btn btn-secondary" onclick="setSimulasi('ekspirasi')">EKSPIRASI (Hembus Udara)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- G. AKTIVITAS ANALISIS (STUDI KASUS) -->
+  <section id="kasus" class="section">
+    <h2>Aktivitas Analisis kasus Kehidupan Sehari-hari</h2>
+    <div style="background:#fff8e1; padding:1rem; border-left:5px solid var(--accent); margin-bottom:1rem;">
+      <p><strong>Kasus 1:</strong> Rina sering berada di lingkungan penuh asap kendaraan. Setelah beberapa bulan, ia sering mengalami batuk berdahak dan sesak napas.</p>
+    </div>
+    
+    <label><strong>1. Organ mana yang paling terganggu akibat paparan asap berkepanjangan?</strong></label>
+    <select id="kasus-q1">
+      <option value="">-- Pilih Jawaban --</option>
+      <option value="salah">Tulang Hidung</option>
+      <option value="benar">Silia Trakea & Alveolus</option>
+      <option value="salah">Otot Diafragma</option>
+    </select>
+
+    <label><strong>2. Mengapa asap kendaraan dapat mengganggu fungsi organ tersebut?</strong></label>
+    <textarea rows="3" placeholder="Jelaskan analisis kamu..."></textarea>
+
+    <button class="btn btn-secondary" onclick="alert('Analisis disimpan! Asap membunuh silia trakea sehingga kotoran menumpuk dan merusak dinding alveolus.')">Kirim Analisis</button>
+  </section>
+
+  <!-- H & I. KUIS EVALUASI INTERAKTIF -->
+  <section id="kuis" class="section">
+    <h2>Kuis Evaluasi Hasil Belajar</h2>
+    <div class="progress-container"><div id="quiz-progress" class="progress-bar"></div></div>
+    
+    <div id="quiz-container">
+      <!-- Diisi oleh JavaScript -->
+    </div>
+    <button id="btn-next-quiz" class="btn" onclick="nextQuestion()" style="display:none;">Soal Berikutnya</button>
+  </section>
+
+  <!-- J. REFLEKSI PESERTA DIDIK -->
+  <section id="refleksi" class="section">
+    <h2>Refleksi Pembelajaran</h2>
+    <form id="form-refleksi" onsubmit="simpanRefleksi(event)">
+      <label>1. Apa hal paling menarik yang baru kamu pelajari tentang sistem pernapasan?</label>
+      <textarea required rows="2"></textarea>
+
+      <label>2. Apa komitmen nyata kamu untuk menjaga kesehatan paru-paru mulai hari ini?</label>
+      <textarea required rows="2"></textarea>
+
+      <button type="submit" class="btn btn-secondary">Simpan Refleksi</button>
+    </form>
+  </section>
+
+  <!-- L. REKAP NILAI (GURU) -->
+  <section id="rekap" class="section">
+    <h2>Rekap Hasil Belajar (Panel Guru)</h2>
+    <div id="rekap-content">
+      <p>Belum ada data kuis yang diselesaikan pada sesi ini.</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- Modal Popup -->
+<div id="infoModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h3 id="modal-title">Judul</h3>
+    <p id="modal-body" style="margin-top:0.5rem;"></p>
+  </div>
+</div>
+
+<script>
+  // ==========================================
+  // KONFIGURASI GURU (EDIT DI SINI)
+  // ==========================================
+  const NAMA_GURU = "Ibu Siti Rahmawati, S.Pd.";
+  const GOOGLE_SCRIPT_URL = "MASUKKAN_URL_GOOGLE_APPS_SCRIPT_DI_SINI"; // Gantilah dengan URL Web App Anda
+  const GOOGLE_DOCS_MATERI = "https://docs.google.com"; // Link Google Docs Materi
+  const GOOGLE_DOCS_LKPD = "https://docs.google.com"; // Link Google Docs LKPD
+
+  // Set nilai konfigurasi ke UI
+  document.getElementById('nama-guru-display').innerText = NAMA_GURU;
+  document.getElementById('doc-materi').href = GOOGLE_DOCS_MATERI;
+  document.getElementById('doc-lkpd').href = GOOGLE_DOCS_LKPD;
+
+  // Navigation Logic
+  function showSection(sectionId) {
+    document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+    
+    document.getElementById(sectionId).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function mulaiBelajar() {
+    const nama = document.getElementById('nama-siswa').value;
+    if(!nama) {
+      alert("Silakan masukkan nama Anda terlebih dahulu!");
+      return;
+    }
+    showSection('tujuan');
+  }
+
+  // Modal Logic
+  function openModal(title, body) {
+    document.getElementById('modal-title').innerText = title;
+    document.getElementById('modal-body').innerText = body;
+    document.getElementById('infoModal').style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('infoModal').style.display = 'none';
+  }
+
+  // Simulasi Pernapasan Logic
+  function setSimulasi(tipe) {
+    const chest = document.getElementById('chest-box');
+    const dia = document.getElementById('diaphragm');
+    
+    if(tipe === 'inspirasi') {
+      chest.style.transform = "scale(1.15)";
+      dia.style.bottom = "0px";
+      document.getElementById('stat-diaphragm').innerText = "Mendatar (Kontraksi)";
+      document.getElementById('stat-volume').innerText = "Membesar";
+      document.getElementById('stat-pressure').innerText = "Mengecil";
+      document.getElementById('stat-air').innerText = "Masuknya Udara (Inspirasi)";
+    } else {
+      chest.style.transform = "scale(1.0)";
+      dia.style.bottom = "10px";
+      document.getElementById('stat-diaphragm').innerText = "Rileks (Melengkung)";
+      document.getElementById('stat-volume').innerText = "Mengecil";
+      document.getElementById('stat-pressure').innerText = "Meningkat";
+      document.getElementById('stat-air').innerText = "Keluarnya Udara (Ekspirasi)";
+    }
+  }
+
+  // Quiz Engine
+  const questions = [
+    {
+      q: "Organ pernapasan yang berfungsi menyesuaikan suhu dan kelembapan udara yang masuk adalah...",
+      opt: ["Trakea", "Hidung", "Bronkus", "Alveolus"],
+      ans: 1,
+      exp: "Hidung memiliki konka dan lendir yang menyesuaikan suhu serta kelembapan udara."
+    },
+    {
+      q: "Pertukaran gas Oksigen dan Karbondioksida terjadi pada organ...",
+      opt: ["Faring", "Laring", "Alveolus", "Bronkiolus"],
+      ans: 2,
+      exp: "Alveolus memiliki dinding tipis berselimut kapiler untuk difusi gas."
+    },
+    {
+      q: "Saat melakukan inspirasi pernapasan dada, otot antartulang rusuk akan mengalami...",
+      opt: ["Relaksasi", "Kontraksi", "Penyempitan", "Pelunakan"],
+      ans: 1,
+      exp: "Inspirasi membutuhkan kontraksi otot untuk mengangkat tulang rusuk dan memperbesar rongga dada."
+    }
+  ];
+
+  let currentQ = 0;
+  let score = 0;
+
+  function loadQuiz() {
+    if(currentQ >= questions.length) {
+      finishQuiz();
+      return;
+    }
+    const qData = questions[currentQ];
+    let html = `<h3>Soal ${currentQ+1} dari ${questions.length}</h3>
+                <p style="font-size:1.1rem; margin:1rem 0;">${qData.q}</p>`;
+    
+    qData.opt.forEach((opt, idx) => {
+      html += `<button class="btn" style="display:block; width:100%; margin:0.5rem 0; text-align:left; background:#fff; color:#333; border:1px solid #ccc;" onclick="checkAnswer(${idx})">${opt}</button>`;
+    });
+
+    document.getElementById('quiz-container').innerHTML = html;
+    document.getElementById('quiz-progress').style.width = `${((currentQ)/questions.length)*100}%`;
+  }
+
+  function checkAnswer(idx) {
+    const qData = questions[currentQ];
+    if(idx === qData.ans) {
+      score += 100 / questions.length;
+      alert("✅ Benar! " + qData.exp);
+    } else {
+      alert("❌ Kurang Tepat. " + qData.exp);
+    }
+    currentQ++;
+    loadQuiz();
+  }
+
+  function finishQuiz() {
+    const nama = document.getElementById('nama-siswa').value || "Siswa Anonymous";
+    const kelas = document.getElementById('kelas-siswa').value || "VIII";
+    const finalScore = Math.round(score);
+
+    let kategori = "";
+    if(finalScore >= 90) kategori = "Sangat Baik 🌟";
+    else if(finalScore >= 80) kategori = "Baik 👍";
+    else if(finalScore >= 70) kategori = "Cukup 📋";
+    else kategori = "Perlu Belajar Lagi 📚";
+
+    document.getElementById('quiz-container').innerHTML = `
+      <h3>Kuis Selesai!</h3>
+      <p>Nama: <strong>${nama}</strong></p>
+      <p>Skor Akhir: <strong style="font-size:1.5rem; color:var(--primary);">${finalScore}</strong></p>
+      <p>Kategori: <strong>${kategori}</strong></p>
+    `;
+
+    document.getElementById('rekap-content').innerHTML = `
+      <p><strong>Nama:</strong> ${nama}</p>
+      <p><strong>Kelas:</strong> ${kelas}</p>
+      <p><strong>Skor Kuis:</strong> ${finalScore}</p>
+      <p><strong>Kategori:</strong> ${kategori}</p>
+    `;
+
+    // Pengiriman Data ke Google Sheets
+    sendToGoogleSheets(nama, kelas, finalScore);
+  }
+
+  function sendToGoogleSheets(nama, kelas, skor) {
+    if(GOOGLE_SCRIPT_URL.includes("MASUKKAN_URL")) {
+      console.log("Google Sheets belum dikonfigurasi.");
+      return;
+    }
+
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nama: nama, kelas: kelas, skor: skor, timestamp: new Date().toLocaleString() })
+    }).then(() => {
+      alert("Data nilai berhasil dikirim ke Google Sheets Guru!");
+    }).catch(err => console.error(err));
+  }
+
+  function simpanRefleksi(e) {
+    e.preventDefault();
+    alert("Refleksi berhasil disimpan. Terima kasih sudah belajar dengan tekun!");
+  }
+
+  // Init Quiz On Load
+  loadQuiz();
+</script>
+</body>
+</html>
